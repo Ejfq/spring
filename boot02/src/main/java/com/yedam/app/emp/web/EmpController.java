@@ -35,11 +35,11 @@ public class EmpController {
 		// 데이터를 출력할 페이지 결정
 		return "emp/list";
 		// classpath:/templates/   emp/list   .html
-		// prefix					retirm		sibfix
+		// prefix					retrim		suffix 
 	}
-	
-	//단건조회 : GET
-	@GetMapping("empInfo")
+	 
+	//단건조회 : GET 
+	@GetMapping("empInfo") // empVO : 커맨드 객체 => QueryString
 	public String empInfo(EmpVO empVO, Model model) {
 		// 해당 기능 수행 -> Service
 		EmpVO findVO = empService.empInfo(empVO);
@@ -48,15 +48,19 @@ public class EmpController {
 				
 		// 데이터를 출력할 페이지 결정
 		return "emp/info";
+		//	"classpath:/templates/emp/info.html"
+		//	prefix				 retrim    suffix 
+		// classpath: => src/main/resources
 	}
 	
 	//등록 - 페이지 : GET
 	@GetMapping("empInsert")
-	public String empInsertForm() {
+	public String empInsertForm(Model model) {
+		model.addAttribute("empVO",	new EmpVO());
 		return "emp/insert";
 	}
 	
-	//등록 - 처리
+	//등록 - 처리 => form태그를 이용한 submit
 	@PostMapping("empInsert")
 	public String empInsertProcess(EmpVO empVO) {
 		int eid = empService.empInsert(empVO);
@@ -83,7 +87,7 @@ public class EmpController {
 	}
 	
 	//수정 - 처리 : AJAX => QueryString
-	@PostMapping("empUpdate")
+	//@PostMapping("empUpdate")
 	@ResponseBody // => AJAX용 컨트롤러
 	public Map<String, Object> empUpdateAJAXQueryString(EmpVO empVO){
 		return empService.empUpdate(empVO);
@@ -91,7 +95,7 @@ public class EmpController {
 	
 	
 	//수정 - 처리 : AJAX => JSON (@RequestBody)
-	//@PostMapping("empUpdate")
+	@PostMapping("empUpdate")
 	@ResponseBody // => AJAX용 컨트롤러
 	public Map<String, Object> empUpdateAJAXJSON(@RequestBody EmpVO empVO){
 		return empService.empUpdate(empVO);

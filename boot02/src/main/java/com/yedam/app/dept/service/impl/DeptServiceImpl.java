@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.yedam.app.dept.mapper.DeptMapper;
 import com.yedam.app.dept.service.DeptService;
 import com.yedam.app.dept.service.DeptVO;
 
+@Service
 public class DeptServiceImpl implements DeptService{
 	@Autowired
 	DeptMapper deptMapper;
@@ -30,7 +32,7 @@ public class DeptServiceImpl implements DeptService{
 	public int deptInsert(DeptVO deptVO) {
 		// TODO Auto-generated method stub
 		int result = deptMapper.insertDeptInfo(deptVO);
-		return result == 1 ? deptVO.getDepartmentId;
+		return result == 1 ? deptVO.getDepartmentId(): -1;
 	}
 
 	@Override
@@ -57,8 +59,10 @@ public class DeptServiceImpl implements DeptService{
 		
 		if(result == 1) {
 			map.put("departmentId", deptVO.getDepartmentId());
+		
+		}
 		return map;
-	}
 	
+}
 	
 }

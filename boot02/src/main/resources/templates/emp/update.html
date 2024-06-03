@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>사원 정보 수정</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+	<form th:object="${empInfo}">
+		<div>
+			<label for="employeeId">사원번호</label>
+			<input type="number" th:field="*{employeeId}" readonly>
+		</div>
+		<div>
+			<label for="lastName">이름</label>
+			<input type="text" th:field="*{lastName}">
+		</div>
+		<div>
+			<label for="email">이메일</label>
+			<input type="email" th:field="*{email}">
+		</div>
+		<div>
+			<label for="hireDate">입사일</label>
+			<input type="date" th:field="*{hireDate}">
+		</div>
+		<div>
+			<label for="jobId">업무</label>
+			<input type="text" th:field="*{jobId}">
+		</div>
+		<div>
+			<label for="salary">급여</label>
+			<input type="number" th:field="*{salary}">
+		</div>
+		<div>
+			<button type="button" id="updateBtn">저장</button>
+		</div>
+	</form>
+	<script>
+		$('#updateBtn').on('click', updateAjax);
+		
+		function updateAjax(event){
+			// Validation Check
+			//let result = validationCheck();
+			//if(result == false) return;
+			if(!validationCheck()) return;
+			
+			// 보낼 데이터 정리
+			let dataObj = getEmpObj();
+			console.log(dataObj);
+			
+			// AJAX
+			$.ajax('empUpdate', {
+				type : 'post',
+				//contentType : 'application/x-www-form-unlencoded'
+				//data : dataObj // 객체 => QueryString
+				
+				//JSON
+				contentType: 'application/json',
+				data : JSON.stringify(dataObj) //객체 or 배열 => JSON
+			})
+			.done(result =>{
+				console.log(result);
+			})
+			.fail(err => console.log(err));
+			
+			
+			
+		}
+		
+		function validationCheck(){
+			let name = $('#lastName');
+			if(name.val() == ''){
+				alert('사원이름은 필수로 입력해야 합니다.');
+				name.focus();
+				return false;
+			}
+			
+			return true;
+		}
+		
+		function getEmpObj(){
+			let formAry = $('form').serializeArray();
+			//[{ name: 'employeeId', value : '209'}, {name : 'lastName', value: 'King'}, ... ]
+			
+			//{employeeId : '209', lastName : 'King', ....}
+			
+			
+			let formObj = {};
+			formAry.forEach(inputTag =>{
+				formObj[inputTag.name] = inputTag.value;
+			})
+			
+			return formObj;
+		}
+		
+
+		
+		
+		
+		
+		
+		
+	</script>
+</body>
+</html>

@@ -1,12 +1,15 @@
 package com.yedam.app.dept.web;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yedam.app.dept.service.DeptService;
 import com.yedam.app.dept.service.DeptVO;
@@ -61,12 +64,32 @@ public class DeptController {
 		deptVO.setDepartmentId(departmentId);
 		
 		DeptVO findVO = deptService.deptInfo(deptVO);
+		model.addAttribute("deptInfo", findVO);
+		return "dept/update";
 		
 	}
 	
 	
+	//수정 처리 ajax=> QueryString
+	@PostMapping("deptUpdate")
+	@ResponseBody
+	public Map<String, Object> deptUpdateAJAXQueryString(DeptVO deptvo){
+		return deptService.deptUpdate(deptvo);
+	}
+	
+	//수정처리 ajax=>JSON
+	@ResponseBody
+	public Map<String,Object> deptUpdateAJAXJSON(@RequestBody DeptVO deptVO){
+		return deptService.deptUpdate(deptVO);
+	}
 	
 	
+	//삭제-처리
+	@GetMapping("deptDelete")
+	public String deptDelete(DeptVO deptVO) {
+		deptService.deptDelete(deptVO);
+		return "redirect:deptList";
+	}
 	
 	
 	
