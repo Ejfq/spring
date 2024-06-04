@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" 
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{common/layouts/default_layout}"
+		layout:fragment="Content">
 <head>
 <meta charset="UTF-8">
 <meta name="contextPath" th:value="${#httpServletRequest.getContextPath()}">
 <title>전체사원조회</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 </head>
 <body>
-	<table>
+
+	<table >
 		<thead>
 			<tr>
 				<th>사원번호</th>

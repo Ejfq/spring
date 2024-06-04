@@ -17,7 +17,7 @@ public class EmpServiceImpl implements EmpService{
 	@Autowired
 	EmpMapper empMapper;
 	
-	@Autowired
+	//@Autowired
 	//DeptMapper deptMapper;
 
 	@Override
@@ -45,6 +45,7 @@ public class EmpServiceImpl implements EmpService{
 		
 		if(result == 1 ) {
 			inSuccessed = true;
+			
 		}
 		
 		map.put("result", inSuccessed);
