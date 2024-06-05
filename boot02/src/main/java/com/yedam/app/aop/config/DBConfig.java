@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class DBConfig {
 	/*
+	 * 프레임워크는 TransactionManager 필요 <> 부트는 필요없음
 	 * @Bean TransactionManager transactionManager(DataSource dataSource) { return
 	 * new DataSourceTransactionManager(dataSource); }
 	 */
