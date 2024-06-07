@@ -23,24 +23,24 @@ public class SpringSecurityConfig {
 	
 	
 	//메모리상 인증정보 등록 => 테스트 전용방식
-	@Bean
-	InMemoryUserDetailsManager inmemoryUserDetailsService() {
-		//security에서 사용하는 VO클래스
-		UserDetails user = User.builder()
-								.username("user1")
-								.password(passwordEncoder().encode("1234"))
-								.roles("USER") //ROLE_USER
-								//.authorities("ROLE_USER")
-								.build();
-		
-		UserDetails admin = User.builder()
-								.username("admin1")
-								.password(passwordEncoder().encode("1234"))
-								.authorities("ROLE_ADMIN")
-								.build();
-		
-		return new InMemoryUserDetailsManager(user, admin);
-	}
+//	@Bean
+//	InMemoryUserDetailsManager inmemoryUserDetailsService() {
+//		//security에서 사용하는 VO클래스
+//		UserDetails user = User.builder()
+//								.username("user1")
+//								.password(passwordEncoder().encode("1234"))
+//								.roles("USER") //ROLE_USER
+//								//.authorities("ROLE_USER")
+//								.build();
+//		
+//		UserDetails admin = User.builder()
+//								.username("admin1")
+//								.password(passwordEncoder().encode("1234"))
+//								.authorities("ROLE_ADMIN")
+//								.build();
+//		
+//		return new InMemoryUserDetailsManager(user, admin);
+//	}
 	
 	//인증 및 인가 설정
 	@Bean
@@ -52,8 +52,12 @@ public class SpringSecurityConfig {
 				.anyRequest().authenticated() // 나머지는 인증만 하면 접근가능
 			.and()
 			.formLogin()
+				.defaultSuccessUrl("/all")
 			.and()
-			.logout();
+			.logout()
+				.logoutSuccessUrl("/all");
+		
+		//http.csrf().disable();
 		
 		return http.build();
 	}
